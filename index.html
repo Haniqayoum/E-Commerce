@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehvar Accessories</title>
+  <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav id="navbar" class="navbar navbar-expand-lg">
+<div class="container-fluid">
+<img src="./images/whitelogo.jpeg" alt="brandlogo" class="logo">    
+<a href="#" id="brandName" class="container-fluid">Mehvar</a>
+</div>
+<div class="collapse navbar-collapse" id="navbarSupportedContent">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+<li class="nav-item"> 
+<a href="#" class="nav-link active " aria-current="page" >Home</a>
+</li>
+<li class="nav-item">
+ <a href="#" class="nav-link">Products</a>
+</li>
+
+
+<form class="d-flex" role="search">
+    <select name="products" id="productMenu" onchange="productChange()">
+        <option value="">Select Product</option>
+    </select>
+<select name="category" id="categoryMenu" onchange="filterProduct()">
+    <option value="">Select Category</option>
+</select>
+<button id="btn" class="btn btn-outline-success" type="submit">
+Search
+</button>
+<div class="carticon">
+<span onclick="openCart()" style="cursor:pointer;">
+🛒 <span id="cartCount">0</span>
+</span>
+</div>
+
+</form>
+</div>
+    </nav>
+
+
+   <div class="container" id="tsparticles">
+<div class="row">
+<div class="col-9 main-content">
+<h1 class="text-center">All Products</h1>
+<div class="mt-2 row row-cols-1 row-cols-md-3 g-4" id="allCards"></div>
+</div>
+<div class="col-3 mt-5 sidebar" id="sidebar">
+</div>
+</div>
+   </div>
+   <div id="cartModal" style="display:none; position:fixed; top:10%; right:10%; width:300px; background:white; border:1px solid #ccc; padding:10px; z-index:999;">
+  
+  <h4>Your Cart</h4>
+
+  <div id="cartItems"></div>
+
+  <hr>
+
+  <button onclick="checkout()">Checkout</button>
+  <button onclick="closeCart()">Close</button>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-firefly@3/tsparticles.preset.firefly.bundle.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
