@@ -1,5 +1,4 @@
-var cart = [];
-var allProducts = { /* ✅ tumhara same data (UNCHANGED) */ 
+var allProducts = {
 Bracelets : { 
 "Tulip Bracelet Golden" : { Name : "Tulip Bracelet Golden", price : 2799, src : "./images/pinktulip.jpeg" },
 "Tulip Bracelet Silver" : { Name : "Tulip Bracelet ", price : 2999, src : "./images/silvertulip.jpeg" },
@@ -54,84 +53,33 @@ Crochet : {
 "Sunflower Crochet" : { Name : "Sunflower Crochet Flower", price : 700, src : "./images/sunflower.jpeg" }
 }
 }
-
-console.log(allProducts["Bracelets"])
+                                                                                      
+var cart = [];
 var allCards = document.getElementById("allCards");
-for (var products in allProducts) {
-  for (var categories in allProducts[products]) {
+var productMenu = document.getElementById("productMenu");
+var categoriesList = ["Tulip", "Bangle", "Ring", "Watch", "Necklace", "Earings"];
 
-    var categoryData = allProducts[products][categories];
-
-    for (var items in categoryData) {
-
-      var itemDetails = categoryData[items];
-console.log(categoryData[items])
-      allCards.innerHTML += `
-      <div class="col">
-        <div class="card h-100">
-          <img src="${itemDetails.src}" class="card-img-top" />
-          <div class="card-body">
-            <h5 class="card-title">${itemDetails.Name}</h5>
-          </div>
-          <div class="card-footer">
-            <small>Price: ${itemDetails.price}/-</small><br>
-
-            <button onclick="addToCart('${products}','${categories}','${items}')">
-              🛒 Add to Cart
-            </button>
-          </div>
-        </div>
-      </div>`;
-    }
-  }
-}                                                                    
-                                                                                             
-(async () =>{ 
-   await loadFireflyPreset(tsParticles);
-    await tsParticles.load({
-       id: "tsparticles",
-        options:{ 
-         preset:"firefly",
-          background:{
-             color : "red",
-             },
-             },
-             });
-             });
-              tsParticles.load({ 
-               id : "tsparticles",
-                options:{
-                   particles:{ 
-                     shape:{
-                         type :"square",
-                         },
-                         },
-                          background:{
-                            color : "red",
-                            },
-                             preset :"firefly",
-                            },
-                            }); 
-                            var productMenu = document.getElementById("productMenu");
-                             var categoryMenu = document.getElementById("categoryMenu");
-                              for (var products in allProducts){
-                                  productMenu.innerHTML +=
-                                  ` <option value="${products}">${products}</option>` ;
-                                  } 
-function productChange() {
-  sidebar.style.display = "none";
+function loadCategories(){
   categoryMenu.innerHTML = `<option value="">Select Category</option>`;
+
+  for (var i = 0; i < categoriesList.length; i++){
+    categoryMenu.innerHTML += `<option value="${categoriesList[i]}">${categoriesList[i]}</option>`;
+  }
+}
+for (var product in allProducts){
+  productMenu.innerHTML += `<option value="${product}">${product}</option>`;
+}
+
+function showAllProducts(){
   allCards.innerHTML = "";
 
-  for (var categories in allProducts[productMenu.value]) {
+  for (var product in allProducts){
 
-    categoryMenu.innerHTML += `<option value="${categories}">${categories}</option>`;
+    var itemsObj = allProducts[product];
 
-    var categoryData = allProducts[productMenu.value][categories];
+    for (var item in itemsObj){
 
-    for (var items in categoryData) {
-
-      var itemDetails = categoryData[items];
+      var itemDetails = itemsObj[item];
 
       allCards.innerHTML += `
       <div class="col">
@@ -141,9 +89,8 @@ function productChange() {
             <h5>${itemDetails.Name}</h5>
           </div>
           <div class="card-footer">
-            <small>Price: ${itemDetails.price}/-</small><br>
-
-            <button onclick="addToCart('${productMenu.value}','${categories}','${items}')">
+            <small>Price: Rs ${itemDetails.price}</small><br>
+            <button onclick="addToCart('${product}','${item}')">
               🛒 Add to Cart
             </button>
           </div>
@@ -152,21 +99,17 @@ function productChange() {
     }
   }
 }
-                                                    var sidebar = document.getElementById("sidebar");
-                                               function filterProduct() {
-  sidebar.innerHTML = "";
-  sidebar.style.display = "block";
+
+function filterProduct(){
+  var product = productMenu.value;
   allCards.innerHTML = "";
 
-  var product = productMenu.value;
-  var category = categoryMenu.value;
+  if (!product) return;
 
-  if (!product || !category) return;
+  var data = allProducts[product];
 
-  var categoryData = allProducts[product][category];
-
-  for (var item in categoryData) {
-    var itemDetails = categoryData[item];
+  for (var item in data){
+    var itemDetails = data[item];
 
     allCards.innerHTML += `
       <div class="col">
@@ -174,76 +117,45 @@ function productChange() {
           <img src="${itemDetails.src}" class="card-img-top" />
           <div class="card-body">
             <h5>${itemDetails.Name}</h5>
-            <small>Price: ${itemDetails.price}/-</small>
           </div>
           <div class="card-footer">
-            <button onclick="addToCart('${product}','${category}','${item}')">
+            <small>Price: Rs ${itemDetails.price}</small><br>
+            <button onclick="addToCart('${product}','${item}')">
               🛒 Add to Cart
             </button>
           </div>
         </div>
       </div>`;
   }
-}           
-                                                                          function filterBrands(brand){
-                                                                           allCards.innerHTML=""
-                                                                            for(var items in allProducts[productMenu.value][categoryMenu.value][brand]){ 
-                                                                            // console.log(allProducts[productMenu.value][categoryMenu.value][brand][items]); 
-                                                                            var itemDetails=allProducts[productMenu.value][categoryMenu.value][brand][items]
-                                                                              allCards.innerHTML+=
-                                                                              ` <div class="col"> 
-                                                                              <div class="card h-100"> 
-                                                                              <img src="${itemDetails.src}" class="card-img-top" alt="..." /> 
-                                                                              <div class="card-body">
-                                                                                  <h5 class="card-title">${itemDetails.Name.toUpperCase()}</h5> 
-                                                                                  <button onclick="addToCart('${productMenu.value}','${categoryMenu.value}','${items}')">
-                                                                                     🛒 Add to Cart </button>
-                                                                                      </div> 
-                                                                                      </div>
-                                                                                       </div>`;
-                                                                                        }
-                                                                                        } 
-                                                                                       function addToCart(product, category, item){
-                                                                                        var itemDetails = allProducts[product][category][item];
-                                                                                         cart.push(itemDetails);
-                                                                                          alert(itemDetails.Name + " added to cart ✅"); 
-                                                                                          renderCart(); // popup update 
-                                                                                           }
-                                                                                           function renderCart(){
-                                                                                            document.getElementById("cartCount").innerText = cart.length;
-                                                                                             var cartItems = document.getElementById("cartItems"); 
-                                                                                             cartItems.innerHTML = "";
-                                                                                              cart.forEach((item, index) => { 
-                                                                                                cartItems.innerHTML += 
-                                                                                                `<p> ${item.Name} - Rs ${item.price} </p>`; 
-                                                                                                });
-                                                                                                 } 
-                                                                                                function openCart(){ 
-                                                                                                document.getElementById("cartModal").style.display = "block"; 
-                                                                                                }
-                                                                                                 function closeCart(){ 
-                                                                                                 document.getElementById("cartModal").style.display = "none"; 
-                                                                                                 } 
-                                                                                                 function checkout(){ 
-                                                                                                 document.getElementById("cartItems").innerHTML = 
-                                                                                                 `<h4>Checkout</h4> 
-                                                                                                 <input id="name" placeholder="Your Name"> 
-                                                                                                 <br><br> <input id="address" placeholder="Address"> 
-                                                                                                 <br><br> <input id="phone" placeholder="Phone">
-                                                                                                  <br><br> <button onclick="placeOrder()">Place Order</button>`;
-                                                                                                    }
-                                                                                                     function placeOrder(){
-                                                                                                     var name = document.getElementById("name").value;
-                                                                                                      var address = document.getElementById("address").value;
-                                                                                                       var phone = document.getElementById("phone").value; 
-                                                                                                       if(name && address && phone){ 
-                                                                                                         alert("Order placed successfully 🎉"); 
-                                                                                                         cart = []; 
-                                                                                                         renderCart(); 
-                                                                                                         closeCart();
-                                                                                                       } else{
-alert("Please fill all details"); 
-                                                                                                       }
-                                                            }
-                                                         
-                                                            
+}
+
+function addToCart(product, item){
+  var itemDetails = allProducts[product][item];
+  cart.push(itemDetails);
+
+  alert(itemDetails.Name + " added to cart ✅");
+  renderCart();
+}
+
+function renderCart(){
+  document.getElementById("cartCount").innerText = cart.length;
+
+  var cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+
+  cart.forEach((item)=>{
+    cartItems.innerHTML += `<p>${item.Name} - Rs ${item.price}</p>`;
+  });
+}
+
+
+function openCart(){ 
+  document.getElementById("cartModal").style.display = "block";
+}
+
+function closeCart(){
+  document.getElementById("cartModal").style.display = "none";
+}
+
+showAllProducts();
+loadCategories();
